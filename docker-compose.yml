@@ -36,5 +36,26 @@ services:
       MB_DB_PASS: spotify_pass
       MB_DB_HOST: postgres
 
+  airflow:
+    image: apache/airflow:2.6.2
+    container_name: spotify_airflow
+    restart: always
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://spotify_user:spotify_pass@postgres:5432/spotify_db
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./src:/opt/airflow/src
+      - ./dbt:/opt/airflow/dbt
+    ports:
+      - "8081:8080"
+    command: >
+      bash -c "airflow db init &&
+               airflow users create --username admin --firstname Admin --lastname User --role Admin --password admin --email admin@example.com &&
+               airflow webserver & airflow scheduler"
+    depends_on:
+      - postgres
+
 volumes:
   postgres_data:
