@@ -1,0 +1,19 @@
+# requirements.txt
+
+# Autenticação e API
+spotipy
+python-dotenv
+
+# Manipulação de dados
+pandas
+
+# Banco de dados
+psycopg2-binary
+
+# Orquestração
+apache-airflow==2.7.3
+apache-airflow-providers-postgres==5.5.0
+
+# dbt
+dbt-core
+dbt-postgres
