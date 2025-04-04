@@ -1,5 +1,8 @@
 # src/auth_spotify.py
 
+# ⚠️ This script is only for local testing of authentication with the Spotify API.
+# Not used by the Airflow/dbt pipeline.
+
 import os
 from dotenv import load_dotenv
 import spotipy
