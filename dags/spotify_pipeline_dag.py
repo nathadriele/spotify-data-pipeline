@@ -6,6 +6,8 @@ default_args = {
     'owner': 'nathadriele',
     'retries': 2,
     'retry_delay': timedelta(minutes=2),
+    'depends_on_past': False,
+    'email_on_failure': False,
 }
 
 with DAG(
@@ -14,7 +16,8 @@ with DAG(
     start_date=datetime(2025, 1, 1),
     schedule_interval='@daily',
     catchup=False,
-    description='Extract recent tracks from Spotify and transform with dbt',
+    description='ETL pipeline: Extract recent tracks from Spotify, transform with dbt and validate with dbt tests',
+    tags=['spotify', 'etl', 'dbt'],
 ) as dag:
 
     extract_recent_tracks = BashOperator(
@@ -27,4 +30,9 @@ with DAG(
         bash_command='cd /opt/airflow/dbt/spotify && dbt run',
     )
 
-    extract_recent_tracks >> run_dbt_models
+    run_dbt_tests = BashOperator(
+        task_id='run_dbt_tests',
+        bash_command='cd /opt/airflow/dbt/spotify && dbt test',
+    )
+
+    extract_recent_tracks >> run_dbt_models >> run_dbt_tests
