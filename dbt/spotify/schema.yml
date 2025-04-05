@@ -1,0 +1,84 @@
+version: 2
+
+models:
+  - name: stg_recent_tracks
+    description: "Staging model for Spotify's recently played tracks."
+    columns:
+      - name: played_at
+        description: "Timestamp when the track was played."
+        tests:
+          - not_null
+          - unique
+
+      - name: track_name
+        description: "Name of the track played."
+        tests:
+          - not_null
+
+      - name: artist_name
+        description: "Artist of the track played."
+        tests:
+          - not_null
+
+      - name: album_name
+        description: "Album of the track played."
+        tests:
+          - not_null
+
+      - name: track_id
+        description: "Spotify ID of the track."
+        tests:
+          - not_null
+          - unique
+
+      - name: duration_sec
+        description: "Duration of the track in seconds."
+
+  - name: top_artists
+    description: "Aggregated count and average duration of tracks by artist."
+    columns:
+      - name: artist_name
+        description: "Artist name."
+        tests:
+          - not_null
+
+      - name: total_tracks
+        description: "Total number of tracks by artist."
+        tests:
+          - not_null
+
+      - name: avg_duration_sec
+        description: "Average track duration by artist."
+
+  - name: top_albums
+    description: "Aggregated count of tracks per album."
+    columns:
+      - name: album_name
+        description: "Album name."
+        tests:
+          - not_null
+
+      - name: total_tracks
+        description: "Total number of tracks in the album."
+
+  - name: listening_by_hour
+    description: "Total tracks played grouped by hour."
+    columns:
+      - name: hour
+        description: "Hour of the day."
+        tests:
+          - not_null
+
+      - name: total_tracks
+        description: "Total number of tracks played in that hour."
+
+  - name: track_duration_buckets
+    description: "Tracks grouped into duration categories."
+    columns:
+      - name: duration_category
+        description: "Category based on track duration (e.g., Short, Medium, Long)."
+        tests:
+          - not_null
+
+      - name: total_tracks
+        description: "Number of tracks in each duration category."
