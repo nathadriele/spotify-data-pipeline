@@ -120,10 +120,10 @@ docker-compose up --build
 
 ##  Insights Available
 
-🎷 Top artists and albums
-🕐 Listening behavior by hour
-⏱️ Track duration distribution
-📈 Daily ingestion and transformation logs
+- 🎷 Top artists and albums
+- 🕐 Listening behavior by hour
+- ⏱️ Track duration distribution
+- 📈 Daily ingestion and transformation logs
 
 ## Highlights
 
